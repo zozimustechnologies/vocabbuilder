@@ -1,18 +1,18 @@
 // ── Badge Definitions ────────────────────────────────────
 
 const MONTHLY_TARGETS = {
-    '01': { target: 45, name: 'January Journeyman' },
-    '02': { target: 40, name: 'February Phrasecraft' },
-    '03': { target: 50, name: 'March Wordsmith' },
-    '04': { target: 50, name: 'April Articulator' },
-    '05': { target: 60, name: 'May Maverick' },
-    '06': { target: 55, name: 'June Juggernaut' },
-    '07': { target: 50, name: 'July Lexicon' },
-    '08': { target: 55, name: 'August Ace' },
-    '09': { target: 60, name: 'September Scholar' },
-    '10': { target: 55, name: 'October Orator' },
-    '11': { target: 50, name: 'November Narrator' },
-    '12': { target: 45, name: 'December Diplomat' }
+    '01': { target: 45, name: 'January Journeyman',   icon: '❄️' },
+    '02': { target: 40, name: 'February Phrasecraft',  icon: '💝' },
+    '03': { target: 50, name: 'March Wordsmith',       icon: '🌸' },
+    '04': { target: 50, name: 'April Articulator',     icon: '🌧️' },
+    '05': { target: 60, name: 'May Maverick',          icon: '🌻' },
+    '06': { target: 55, name: 'June Juggernaut',       icon: '☀️' },
+    '07': { target: 50, name: 'July Lexicon',          icon: '🎆' },
+    '08': { target: 55, name: 'August Ace',            icon: '🏖️' },
+    '09': { target: 60, name: 'September Scholar',     icon: '🍂' },
+    '10': { target: 55, name: 'October Orator',        icon: '🎃' },
+    '11': { target: 50, name: 'November Narrator',     icon: '🍁' },
+    '12': { target: 45, name: 'December Diplomat',     icon: '🎄' }
 };
 
 const STREAK_BADGES = [

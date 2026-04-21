@@ -525,7 +525,7 @@
         html += `</div></div>`;
 
         // ── Monthly Badges ──────────────────────────────
-        html += `<div class="badge-section"><h3>📅 Monthly Challenges</h3><div class="monthly-badge-list">`;
+        html += `<div class="badge-section"><h3>�️ Monthly Challenges</h3><div class="monthly-badge-list">`;
         const now = new Date();
         // Show current month + previous 5 months
         for (let i = 0; i < 6; i++) {
@@ -538,7 +538,7 @@
             const monthCount = state.remembered.filter(r => r.rememberedDate && r.rememberedDate.startsWith(ym)).length;
             const cls = earned ? 'earned' : 'locked';
             html += `<div class="monthly-badge-item ${cls}" data-action="showBadgeDetail" data-value="${ym}" data-badgetype="monthly">`;
-            html += `<div class="mb-icon">${earned ? '🏅' : '📅'}</div>`;
+            html += `<div class="mb-icon">${earned ? '🏅' : monthDef.icon}</div>`;
             html += `<div class="mb-info"><div class="mb-name">${monthDef.name}</div><div class="mb-target">${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()} — ${monthDef.target} words</div></div>`;
             html += `<div class="mb-status">${earned ? '✓ Earned' : `${monthCount}/${monthDef.target}`}</div>`;
             html += `</div>`;
@@ -572,7 +572,7 @@
             const mk = key.slice(5, 7);
             const monthDef = MONTHLY_TARGETS[mk];
             if (!monthDef) { return; }
-            icon = '📅'; name = monthDef.name; desc = `${monthDef.target} words in ${key}`;
+            icon = monthDef.icon || '🗓️'; name = monthDef.name; desc = `${monthDef.target} words in ${key}`;
             earned = !!state.badges.monthly[key]?.achieved;
             achievedDate = state.badges.monthly[key]?.achievedDate || '';
         }
