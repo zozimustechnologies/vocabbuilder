@@ -28,6 +28,7 @@ const STREAK_BADGES = [
 ];
 
 const LIFETIME_BADGES = [
+    { count: 50,    name: 'First Fifty',          icon: '🎯', desc: 'Learn 50 words' },
     { count: 100,   name: 'Word Seedling',       icon: '🌱', desc: 'Learn 100 words' },
     { count: 200,   name: 'Vocabulary Sprout',    icon: '🌿', desc: 'Learn 200 words' },
     { count: 300,   name: 'Lexicon Explorer',     icon: '🧭', desc: 'Learn 300 words' },

@@ -227,6 +227,7 @@ a:hover { text-decoration: underline; }
     font-weight: 700; cursor: pointer; transition: all 0.15s ease; font-family: inherit;
     display: flex; align-items: center; justify-content: center; gap: 6px;
 }
+.btn svg { vertical-align: middle; flex-shrink: 0; }
 .btn:active { transform: scale(0.97); }
 .btn-remember { background: linear-gradient(135deg, #2ea043, #238636); color: #fff; }
 .btn-remember:hover { background: linear-gradient(135deg, #3fb950, #2ea043); }
@@ -413,14 +414,14 @@ a:hover { text-decoration: underline; }
 
 .badge-item:hover { border-color: var(--brand-primary); transform: translateY(-2px); }
 .badge-item.earned { border-color: var(--yellow); background: rgba(210,153,34,0.06); }
-.badge-item.locked { opacity: 0.4; }
-.badge-item.locked:hover { opacity: 0.6; transform: none; }
+.badge-item.locked { opacity: 1; background: var(--bg-tertiary); border-color: var(--border-color); }
+.badge-item.locked:hover { border-color: var(--text-muted); transform: none; }
 
 .badge-icon { font-size: 28px; margin-bottom: 4px; }
-.badge-item.locked .badge-icon { filter: grayscale(100%); }
+.badge-item.locked .badge-icon { filter: grayscale(80%) brightness(0.7); opacity: 0.55; }
 
 .badge-name { font-size: 10px; font-weight: 700; line-height: 1.2; color: var(--text-primary); }
-.badge-item.locked .badge-name { color: var(--text-muted); }
+.badge-item.locked .badge-name { color: var(--text-secondary); }
 
 .badge-progress { font-size: 9px; color: var(--text-muted); margin-top: 3px; }
 .badge-item.earned .badge-progress { color: var(--yellow); }
@@ -464,7 +465,7 @@ a:hover { text-decoration: underline; }
 
 .monthly-badge-item:hover { border-color: var(--brand-primary); }
 .monthly-badge-item.earned { border-color: var(--yellow); background: rgba(210,153,34,0.06); }
-.monthly-badge-item.locked { opacity: 0.5; }
+.monthly-badge-item.locked { opacity: 1; background: var(--bg-tertiary); }
 
 .mb-icon { font-size: 24px; }
 .mb-info { flex: 1; }
@@ -472,7 +473,7 @@ a:hover { text-decoration: underline; }
 .mb-target { font-size: 10px; color: var(--text-muted); }
 .mb-status { font-size: 10px; font-weight: 600; }
 .monthly-badge-item.earned .mb-status { color: var(--yellow); }
-.monthly-badge-item.locked .mb-status { color: var(--text-muted); }
+.monthly-badge-item.locked .mb-status { color: var(--text-secondary); }
 
 /* ── Footer ──────────────────────────────────────────── */
 .app-footer {
