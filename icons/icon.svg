@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3d7ea6"/>
+      <stop offset="100%" stop-color="#1a4a6e"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="20" fill="url(#bg)"/>
+  <!-- Open book -->
+  <g transform="translate(64, 68)" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left page -->
+    <path d="M-4,-30 C-4,-30 -40,-34 -42,-28 L-42,24 C-40,18 -4,22 -4,22Z" fill="rgba(255,255,255,0.15)" stroke="#ffffff" stroke-width="3"/>
+    <!-- Right page -->
+    <path d="M4,-30 C4,-30 40,-34 42,-28 L42,24 C40,18 4,22 4,22Z" fill="rgba(255,255,255,0.15)" stroke="#ffffff" stroke-width="3"/>
+    <!-- Spine -->
+    <path d="M0,-32 L0,24" stroke="#ffffff" stroke-width="2.5"/>
+    <!-- Text lines on left page -->
+    <line x1="-34" y1="-16" x2="-10" y2="-16" stroke="#ffffff" stroke-width="2" opacity="0.7"/>
+    <line x1="-34" y1="-6" x2="-14" y2="-6" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+    <line x1="-34" y1="4" x2="-12" y2="4" stroke="#ffffff" stroke-width="2" opacity="0.4"/>
+    <!-- Letters floating above the book -->
+    <text x="-16" y="-38" font-family="Georgia, serif" font-size="16" font-weight="bold" fill="#ffffff" opacity="0.9" stroke="none">A</text>
+    <text x="4" y="-44" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#ffffff" opacity="0.7" stroke="none">b</text>
+    <text x="18" y="-36" font-family="Georgia, serif" font-size="10" font-weight="bold" fill="#ffffff" opacity="0.5" stroke="none">c</text>
+    <!-- Small sparkle -->
+    <circle cx="-24" cy="-42" r="2" fill="#ffffff" opacity="0.6" stroke="none"/>
+    <circle cx="26" cy="-40" r="1.5" fill="#ffffff" opacity="0.4" stroke="none"/>
+  </g>
+</svg>

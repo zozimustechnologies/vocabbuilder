@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Builder</title>
+    <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="app-header" id="app-header" style="display:none">
+            <div class="brand-bar">
+                <span class="brand-icon">📖</span>
+                <span class="brand-title">Vocab Builder</span>
+                <span class="streak-badge" title="Current streak">🔥 <span id="streak-count">0</span></span>
+                <button class="settings-cog" id="settings-cog" data-view="settings" title="Settings">⚙️</button>
+            </div>
+            <nav class="nav-bar" id="nav-bar">
+                <button class="nav-btn active" data-view="word" title="Word of the Day">
+                    <span class="nav-icon">W</span><span class="nav-label">Word</span>
+                </button>
+                <button class="nav-btn" data-view="remembered" title="Remembered Words">
+                    <span class="nav-icon">✓</span><span class="nav-label">Got It</span>
+                </button>
+                <button class="nav-btn" data-view="recycled" title="Words to Revise">
+                    <span class="nav-icon">↻</span><span class="nav-label">Revise</span>
+                </button>
+                <button class="nav-btn" data-view="badges" title="Badges & Gamification">
+                    <span class="nav-icon">☆</span><span class="nav-label">Badges</span>
+                </button>
+                <button class="nav-btn" data-view="stats" title="Progress & Stats">
+                    <span class="nav-icon">▤</span><span class="nav-label">Stats</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main id="content">
+            <div class="loading">Loading...</div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer" id="app-footer" style="display:none">
+            <div class="footer-row">
+                <div class="copyright">
+                    © <a href="https://github.com/zozimustechnologies" target="_blank" rel="noopener noreferrer">Zozimus Technologies</a>
+                </div>
+                <a class="donate-btn" href="https://wise.com/pay/business/sandeepchadda?utm_source=open_link" target="_blank" rel="noopener noreferrer">Donate</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="../data/words.js"></script>
+    <script src="../data/wordlist.js"></script>
+    <script src="../data/badges.js"></script>
+    <script src="../data/dictionary-api.js"></script>
+    <script src="sidepanel.js"></script>
+</body>
+</html>
