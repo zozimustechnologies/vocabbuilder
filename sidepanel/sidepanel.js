@@ -530,8 +530,8 @@
         // Show current month + previous 5 months
         for (let i = 0; i < 6; i++) {
             const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-            const ym = d.toISOString().slice(0, 7); // "2026-04"
             const mk = String(d.getMonth() + 1).padStart(2, '0');
+            const ym = d.getFullYear() + '-' + mk; // local date: "2026-04"
             const monthDef = MONTHLY_TARGETS[mk];
             if (!monthDef) { continue; }
             const earned = state.badges.monthly[ym]?.achieved;
