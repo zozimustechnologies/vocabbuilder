@@ -1,4 +1,4 @@
-// VocabBuilder Developer Documentation - Interactive Features
+// VocabBuilder - Interactive Features
 
 document.addEventListener('DOMContentLoaded', function() {
   // Smooth scroll for anchor links
@@ -21,18 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const codeBlocks = document.querySelectorAll('pre');
   
   codeBlocks.forEach(block => {
-    block.style.position = 'relative';
     block.style.cursor = 'pointer';
+    block.setAttribute('title', 'Click to copy');
     
     block.addEventListener('click', function() {
       const code = this.textContent;
       copyToClipboard(code, this);
     });
   });
-
-  // Active navigation highlighting
-  highlightActiveNav();
-  window.addEventListener('scroll', highlightActiveNav);
 });
 
 function copyToClipboard(text, element) {
@@ -50,22 +46,3 @@ function copyToClipboard(text, element) {
   });
 }
 
-function highlightActiveNav() {
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('nav a');
-  
-  let current = '';
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 150;
-    if (window.scrollY >= sectionTop) {
-      current = section.getAttribute('id');
-    }
-  });
-  
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${current}`) {
-      link.classList.add('active');
-    }
-  });
-}
