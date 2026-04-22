@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VocabBuilder - A spaced repetition vocabulary learning browser extension for competitive exams and language learners.">
+  <meta name="keywords" content="vocabulary, spaced repetition, browser extension, GMAT, GRE, LSAT, CAT">
+  <meta name="author" content="Zozimus Technologies">
+  <title>VocabBuilder Developer Documentation</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <h1>VocabBuilder</h1>
+      <div>
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#setup">Setup</a>
+        <a href="#structure">Code Structure</a>
+        <a href="#features">Features</a>
+        <a href="#contributing">Contributing</a>
+        <a href="https://github.com/zozimustechnologies/vocabbuilder" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>VocabBuilder</h1>
+      <p>Developer documentation for a spaced repetition vocabulary learning browser extension built with Manifest V3</p>
+      <div class="cta-buttons">
+        <a href="https://github.com/zozimustechnologies/vocabbuilder" class="btn btn-primary">View on GitHub</a>
+        <a href="#overview" class="btn btn-secondary">Read the Docs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overview Section -->
+  <section id="overview">
+    <div class="container">
+      <h2>🚀 Project Overview</h2>
+      
+      <p>VocabBuilder is a <strong>Manifest V3 browser extension</strong> for Microsoft Edge and Google Chrome that helps users build vocabulary through spaced repetition and daily habit formation. It's designed for competitive exam aspirants (GMAT, GRE, LSAT, CAT), ESL learners, professionals, and lifelong language enthusiasts.</p>
+
+      <h3>Key Characteristics</h3>
+      <ul>
+        <li><strong>Platform:</strong> Microsoft Edge & Google Chrome (Manifest V3)</li>
+        <li><strong>UI Location:</strong> Browser side panel (not a popup)</li>
+        <li><strong>Data Storage:</strong> 100% local via Chrome Storage API</li>
+        <li><strong>No Build Step:</strong> Pure HTML, CSS, and vanilla JavaScript</li>
+        <li><strong>Version:</strong> 0.2.0</li>
+        <li><strong>License:</strong> MIT</li>
+      </ul>
+
+      <h3>Tech Stack</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Technology</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Frontend UI</td>
+            <td>HTML5, CSS3 (vanilla, no frameworks)</td>
+          </tr>
+          <tr>
+            <td>JavaScript</td>
+            <td>ES6+ vanilla (no dependencies)</td>
+          </tr>
+          <tr>
+            <td>Background Service</td>
+            <td>Service Worker (Manifest V3)</td>
+          </tr>
+          <tr>
+            <td>Data Persistence</td>
+            <td>Chrome Storage API (<code>chrome.storage.local</code>)</td>
+          </tr>
+          <tr>
+            <td>Notifications</td>
+            <td>Chrome Notifications API + Alarms API</td>
+          </tr>
+          <tr>
+            <td>UI Theme</td>
+            <td>Dark theme (GitHub-style color palette)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Architecture Section -->
+  <section id="architecture">
+    <div class="container">
+      <h2>🏗️ Architecture</h2>
+      
+      <p>VocabBuilder follows a clean extension architecture with three main layers: background service worker, side panel UI, and data layer.</p>
+
+      <h3>Component Architecture</h3>
+      
+      <div class="architecture-diagram">┌─────────────────────────────────────────────┐
+│         MANIFEST V3 EXTENSION               │
+├─────────────────────────────────────────────┤
+│                                             │
+│  ┌──────────────────────────────────────┐  │
+│  │   SIDE PANEL UI LAYER                │  │
+│  │  (sidepanel/sidepanel.html/css/js)   │  │
+│  │  • Word cards display                │  │
+│  │  • Got It / Recycle lists            │  │
+│  │  • Badges grid                       │  │
+│  │  • Settings & stats                  │  │
+│  └──────────────────────────────────────┘  │
+│           ↕ (Storage API)                   │
+│  ┌──────────────────────────────────────┐  │
+│  │   BACKGROUND SERVICE WORKER          │  │
+│  │  (background/service-worker.js)      │  │
+│  │  • Spaced repetition logic           │  │
+│  │  • Badge tracking & calculation      │  │
+│  │  • Streak management                 │  │
+│  │  • Daily reminders (Alarms API)      │  │
+│  │  • Local notifications               │  │
+│  └──────────────────────────────────────┘  │
+│           ↕ (Storage API)                   │
+│  ┌──────────────────────────────────────┐  │
+│  │   CHROME STORAGE API (Local)         │  │
+│  │  • words[] — All user's learned words│  │
+│  │  • stats {} — Streak, goals, totals  │  │
+│  │  • badges {} — Badge unlock history  │  │
+│  │  • settings {} — User preferences    │  │
+│  └──────────────────────────────────────┘  │
+│                                             │
+└─────────────────────────────────────────────┘</div>
+
+      <h3>File Structure</h3>
+      <div class="file-structure">vocabbuilder/
+├── manifest.json              # Manifest V3 configuration
+├── background/
+│   └── service-worker.js       # Background service worker
+│       • Spaced repetition logic
+│       • Badge & streak tracking
+│       • Daily reminders
+├── sidepanel/
+│   ├── sidepanel.html          # Side panel UI structure
+│   ├── sidepanel.css           # Styling (dark theme)
+│   └── sidepanel.js            # Event handlers, state management
+├── data/
+│   ├── words.js                # Word object model & initialization
+│   ├── wordlist.js             # Curated word list (40 words)
+│   ├── dictionary-api.js       # API integration utilities
+│   └── badges.js               # Badge definitions & logic
+├── icons/
+│   ├── icon-16.png
+│   ├── icon-32.png
+│   ├── icon-48.png
+│   └── icon-128.png
+└── tests/
+    └── validate-words.js       # Word list validation</div>
+
+      <h3>Data Flow</h3>
+      <ul>
+        <li><strong>User opens side panel:</strong> Extension icon click → <code>sidepanel.js</code> loads and queries <code>chrome.storage.local</code></li>
+        <li><strong>User marks "Got It":</strong> <code>sidepanel.js</code> → <code>service-worker.js</code> updates word status → Storage updated</li>
+        <li><strong>User marks "Not Yet":</strong> Service worker recalculates next review date (1→3→7→14→30 days)</li>
+        <li><strong>Daily reminder:</strong> Service worker (via Alarms API) → Notifications API → User notification at 9 AM</li>
+        <li><strong>Badge unlocked:</strong> Service worker detects milestone → <code>sidepanel.js</code> displays toast notification</li>
+      </ul>
+
+      <h3>Manifest V3 Permissions</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Permission</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>storage</code></td>
+            <td>Read/write to <code>chrome.storage.local</code> for data persistence</td>
+          </tr>
+          <tr>
+            <td><code>alarms</code></td>
+            <td>Schedule daily reminder notifications at 9 AM</td>
+          </tr>
+          <tr>
+            <td><code>notifications</code></td>
+            <td>Display toast notifications (badge unlocked, daily reminder)</td>
+          </tr>
+          <tr>
+            <td><code>sidePanel</code></td>
+            <td>Display extension UI in browser side panel</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Setup Section -->
+  <section id="setup">
+    <div class="container">
+      <h2>⚙️ Development Setup</h2>
+
+      <h3>Prerequisites</h3>
+      <ul>
+        <li>Microsoft Edge (v115+) or Google Chrome (v115+)</li>
+        <li>Git</li>
+        <li>A code editor (VS Code recommended)</li>
+        <li>Basic knowledge of JavaScript, HTML, and Chrome extension APIs</li>
+      </ul>
+
+      <h3>Installation & Running Locally</h3>
+      
+      <h4>Step 1: Clone the Repository</h4>
+      <pre><code>git clone https://github.com/zozimustechnologies/vocabbuilder.git
+cd vocabbuilder</code></pre>
+
+      <h4>Step 2: Load in Chrome/Edge</h4>
+      <p><strong>For Google Chrome:</strong></p>
+      <ol>
+        <li>Open <code>chrome://extensions</code></li>
+        <li>Enable <strong>Developer mode</strong> (top right toggle)</li>
+        <li>Click <strong>Load unpacked</strong></li>
+        <li>Select the <code>vocabbuilder</code> folder</li>
+        <li>Extension appears in your toolbar → Click to open side panel</li>
+      </ol>
+
+      <p><strong>For Microsoft Edge:</strong></p>
+      <ol>
+        <li>Open <code>edge://extensions</code></li>
+        <li>Enable <strong>Developer mode</strong> (bottom left toggle)</li>
+        <li>Click <strong>Load unpacked</strong></li>
+        <li>Select the <code>vocabbuilder</code> folder</li>
+        <li>Extension appears in your toolbar → Click to open side panel</li>
+      </ol>
+
+      <h4>Step 3: Testing & Debugging</h4>
+      <p>Open the developer tools:</p>
+      <ul>
+        <li><strong>Side panel UI:</strong> Right-click on side panel → <strong>Inspect</strong> or <code>F12</code></li>
+        <li><strong>Service worker:</strong> Open extension details → Click <strong>Service worker</strong> link → Opens DevTools</li>
+        <li><strong>Chrome Storage API:</strong> DevTools → Application → Storage → Local Storage</li>
+      </ul>
+
+      <h4>Step 4: Making Changes</h4>
+      <ul>
+        <li><strong>Side panel changes:</strong> Edit <code>sidepanel/sidepanel.html/css/js</code> → Close & reopen side panel to see changes</li>
+        <li><strong>Service worker changes:</strong> Edit <code>background/service-worker.js</code> → Click reload icon in extensions page</li>
+        <li><strong>Word data changes:</strong> Edit <code>data/words.js</code> → Run <code>node tests/validate-words.js</code> to validate</li>
+      </ul>
+
+      <h3>Build & Icons</h3>
+      <p>To regenerate extension icons:</p>
+      <pre><code>node generate-icons.js</code></pre>
+      <p>This creates icon assets for all required sizes (16×16, 32×32, 48×48, 128×128).</p>
+    </div>
+  </section>
+
+  <!-- Code Structure Section -->
+  <section id="structure">
+    <div class="container">
+      <h2>📁 Code Structure Guide</h2>
+
+      <h3>Side Panel UI</h3>
+      <p><code>sidepanel/sidepanel.html</code> — Main UI template with views:</p>
+      <ul>
+        <li><strong>Word of the Day:</strong> Random word card from current level</li>
+        <li><strong>Got It List:</strong> Words user has learned</li>
+        <li><strong>Recycle List:</strong> Words due for review</li>
+        <li><strong>Badges Grid:</strong> Streak, word count, monthly challenge badges</li>
+        <li><strong>Stats & Analytics:</strong> Progress overview</li>
+        <li><strong>Settings:</strong> Difficulty level, daily goal, data reset</li>
+      </ul>
+
+      <p><code>sidepanel/sidepanel.js</code> — Event handlers and state management:</p>
+      <ul>
+        <li>Load/save words from storage</li>
+        <li>Handle "Got It" / "Not Yet" clicks</li>
+        <li>Update UI based on word status</li>
+        <li>Manage tabs and view switching</li>
+        <li>Display toast notifications</li>
+      </ul>
+
+      <h3>Background Service Worker</h3>
+      <p><code>background/service-worker.js</code> — Business logic and scheduling:</p>
+      <ul>
+        <li><strong>Word Status Updates:</strong> Transition words through states (new → recycle → got it)</li>
+        <li><strong>Spaced Repetition:</strong> Calculate next review date (1→3→7→14→30 days)</li>
+        <li><strong>Badge System:</strong> Track milestones (streaks, word counts, monthly goals)</li>
+        <li><strong>Streak Tracking:</strong> Persist daily streaks, detect breaks, reset logic</li>
+        <li><strong>Daily Reminders:</strong> Use Alarms API to schedule 9 AM notifications</li>
+        <li><strong>Notifications:</strong> Show toast when badges earned</li>
+      </ul>
+
+      <h3>Data Layer</h3>
+      <p><code>data/words.js</code> — Word object model:</p>
+      <pre><code>const wordObject = {
+  id: 1,
+  word: "propitious",
+  pronunciation: "/prəˈpɪʃəs/",
+  partOfSpeech: "adjective",
+  definition: "Giving or indicating a good chance of success",
+  level: "complex",  // "simple" | "medium" | "complex" | "competitive"
+  examples: [
+    "The sunny weather was propitious for the outdoor picnic."
+  ],
+  synonyms: ["favorable", "promising", "auspicious"],
+  antonyms: ["unpromising", "ominous"],
+  etymology: "Latin: propitius (favorable)",
+  status: "new",  // "new" | "recycle" | "got-it"
+  createdAt: 1681234567000,
+  reviewDates: [1681234567000],
+  lastReviewDate: 1681234567000
+};</code></pre>
+
+      <p><code>data/wordlist.js</code> — Curated 40-word vocabulary list:</p>
+      <ul>
+        <li>10 words for each difficulty level (simple, medium, complex, competitive)</li>
+        <li>Words selected for exam relevance and real-world usage</li>
+        <li>Organized by thematic groups</li>
+      </ul>
+
+      <p><code>data/badges.js</code> — Badge system definitions:</p>
+      <ul>
+        <li><strong>Streak Badges:</strong> 3/7/15/30/90/180/365 days</li>
+        <li><strong>Word Count Badges:</strong> 100/250/500/1000/2500/5000/10000 words</li>
+        <li><strong>Monthly Challenge:</strong> Complete daily goal for 7/14/21/28 days</li>
+      </ul>
+
+      <h3>Testing</h3>
+      <p><code>tests/validate-words.js</code> — Validates word list:</p>
+      <pre><code>node tests/validate-words.js</code></pre>
+      <p>Checks:</p>
+      <ul>
+        <li>All required fields present (word, pronunciation, definition, etc.)</li>
+        <li>Pronunciation follows IPA format</li>
+        <li>Part of speech is valid</li>
+        <li>Level is one of: simple, medium, complex, competitive</li>
+        <li>No duplicate words</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features">
+    <div class="container">
+      <h2>✨ Key Features & Implementation</h2>
+
+      <h3>Spaced Repetition Algorithm</h3>
+      <p>Core learning science: progressively increasing intervals for review to optimize memory retention.</p>
+      <div class="highlight">
+        <strong>Flow:</strong> New → Review Day 1 → Not Yet? → Review Day 3 → Not Yet? → Review Day 7 → ... → Review Day 30 → Got It! (Move to remembered list)
+      </div>
+      <p><strong>Implementation:</strong></p>
+      <ul>
+        <li>When user marks "Not Yet": calculate next review date based on current interval</li>
+        <li>Service worker compares current date with review date</li>
+        <li>Only words with past review dates appear in "Recycle" list</li>
+        <li>When user marks "Got It": word moves to "Got It" list (no more reviews)</li>
+      </ul>
+
+      <h3>4 Difficulty Levels</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Level</th>
+            <th>Target Audience</th>
+            <th>Word Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Simple</strong></td>
+            <td>Beginners, ESL learners</td>
+            <td>Everyday vocabulary (200-500 word level)</td>
+          </tr>
+          <tr>
+            <td><strong>Medium</strong></td>
+            <td>Intermediate learners</td>
+            <td>Academic & professional vocabulary</td>
+          </tr>
+          <tr>
+            <td><strong>Complex</strong></td>
+            <td>Advanced learners</td>
+            <td>Literary, nuanced, sophisticated words</td>
+          </tr>
+          <tr>
+            <td><strong>Competitive</strong></td>
+            <td>Exam aspirants (GMAT, GRE, LSAT, CAT)</td>
+            <td>High-frequency exam words with tricky usage</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Implementation:</strong> Users select level in Settings → Only words from that level appear in "Word of the Day" and quiz cycles</p>
+
+      <h3>Badge System</h3>
+      <p><strong>Streak Badges:</strong> Unlock for consecutive daily visits</p>
+      <ul>
+        <li>🥉 3-day streak</li>
+        <li>🥈 7-day streak</li>
+        <li>🥇 15-day streak</li>
+        <li>💎 30-day streak</li>
+        <li>👑 90-day streak</li>
+        <li>🌟 180-day streak</li>
+        <li>🚀 365-day streak</li>
+      </ul>
+
+      <p><strong>Word Count Badges:</strong> Unlock for words learned milestones</p>
+      <ul>
+        <li>100, 250, 500, 1000, 2500, 5000, 10000 words</li>
+      </ul>
+
+      <p><strong>Monthly Challenge Badges:</strong> Complete daily goal</p>
+      <ul>
+        <li>1 week (7 days), 2 weeks (14 days), 3 weeks (21 days), full month (28 days)</li>
+      </ul>
+
+      <p><strong>Implementation:</strong> Service worker checks thresholds on each update → Toast notification → Badge added to grid</p>
+
+      <h3>Streak Tracking & Reset Logic</h3>
+      <ul>
+        <li><strong>Streak starts:</strong> First word reviewed</li>
+        <li><strong>Streak continues:</strong> At least one action per day (review word, earn badge)</li>
+        <li><strong>Streak breaks:</strong> More than 24 hours without activity (checked daily at 9 AM)</li>
+        <li><strong>Reset logic:</strong> Service worker runs daily alarm → checks last activity date → resets if >24h gap</li>
+      </ul>
+
+      <h3>Daily Reminders</h3>
+      <ul>
+        <li><strong>Trigger:</strong> Service worker Alarms API schedules recurring alarm at 9 AM</li>
+        <li><strong>Notification:</strong> "Time to learn a new word! Open VocabBuilder."</li>
+        <li><strong>Configurable:</strong> Users can disable/enable in Settings</li>
+      </ul>
+
+      <h3>Word Card Rich Data</h3>
+      <p>Each word displays:</p>
+      <ul>
+        <li>📖 IPA pronunciation</li>
+        <li>🏷️ Part of speech</li>
+        <li>📝 Definition</li>
+        <li>💡 Usage example</li>
+        <li>➡️ Synonyms & antonyms</li>
+        <li>🌳 Etymology</li>
+        <li>⚙️ Share button (copy to clipboard)</li>
+      </ul>
+
+      <h3>Statistics & Progress Tracking</h3>
+      <ul>
+        <li>Total words learned</li>
+        <li>Current streak</li>
+        <li>Average words per day</li>
+        <li>Daily goal progress</li>
+        <li>Visual charts (optional future enhancement)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contributing Section -->
+  <section id="contributing">
+    <div class="container">
+      <h2>🤝 Contributing</h2>
+
+      <h3>How to Contribute</h3>
+
+      <h4>1. Adding New Words</h4>
+      <ol>
+        <li>Open <code>data/wordlist.js</code></li>
+        <li>Add word object following the schema in <code>data/words.js</code></li>
+        <li>Ensure all required fields are present</li>
+        <li>Run validation: <code>node tests/validate-words.js</code></li>
+        <li>Test in the extension by reloading</li>
+        <li>Submit PR with justification for word selection</li>
+      </ol>
+
+      <h4>2. Modifying Spaced Repetition Logic</h4>
+      <ol>
+        <li>Update interval calculation in <code>background/service-worker.js</code></li>
+        <li>Document changes in PR (explain spaced rep science rationale)</li>
+        <li>Test thoroughly with multiple word transitions</li>
+      </ol>
+
+      <h4>3. Reporting Bugs</h4>
+      <ol>
+        <li>Check existing issues on GitHub</li>
+        <li>Create new issue with:</li>
+        <ul>
+          <li>Browser & version</li>
+          <li>Steps to reproduce</li>
+          <li>Expected vs. actual behavior</li>
+          <li>Screenshots if applicable</li>
+        </ul>
+      </ol>
+
+      <h4>4. Feature Requests</h4>
+      <ol>
+        <li>Open issue with <code>[FEATURE]</code> prefix</li>
+        <li>Describe use case and desired behavior</li>
+        <li>Discuss architecture impact with maintainers</li>
+      </ol>
+
+      <h3>PR Process</h3>
+      <ol>
+        <li>Fork repository</li>
+        <li>Create feature branch: <code>git checkout -b feature/your-feature</code></li>
+        <li>Make changes and test locally</li>
+        <li>Commit with clear messages: <code>git commit -m "Add [feature]: description"</code></li>
+        <li>Push to fork: <code>git push origin feature/your-feature</code></li>
+        <li>Open PR against <code>main</code> branch</li>
+        <li>Include PR description with motivation and changes</li>
+        <li>Wait for review and address feedback</li>
+      </ol>
+
+      <h3>Coding Standards</h3>
+      <ul>
+        <li>Use vanilla JavaScript (no external dependencies)</li>
+        <li>Use const/let (no var)</li>
+        <li>Add comments for complex logic</li>
+        <li>Follow existing code style and naming conventions</li>
+        <li>Test changes in both Chrome and Edge</li>
+        <li>Ensure no console errors or warnings</li>
+      </ul>
+
+      <h3>Testing Checklist</h3>
+      <ul>
+        <li>☐ Words load correctly from storage</li>
+        <li>☐ "Got It" button transitions word to remembered list</li>
+        <li>☐ "Not Yet" button schedules next review correctly</li>
+        <li>☐ Badges unlock at correct milestones</li>
+        <li>☐ Streak calculation is accurate</li>
+        <li>☐ Daily reminder shows at 9 AM</li>
+        <li>☐ Settings persist across sessions</li>
+        <li>☐ No console errors in DevTools</li>
+        <li>☐ UI responsive on different screen sizes</li>
+      </ul>
+
+      <h3>Getting Help</h3>
+      <ul>
+        <li>📖 Read <code>README.md</code> for quick overview</li>
+        <li>📋 Check <code>SPEC.md</code> for feature specifications</li>
+        <li>💬 Open discussion in GitHub Issues</li>
+        <li>📧 Contact maintainers for questions</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- API Documentation Section -->
+  <section id="api">
+    <div class="container">
+      <h2>🔌 API & Data Model Reference</h2>
+
+      <h3>Word Object Schema</h3>
+      <pre><code>{
+  id: Number,                           // Unique identifier
+  word: String,                         // The vocabulary word
+  pronunciation: String,                // IPA format, e.g., "/prəˈpɪʃəs/"
+  partOfSpeech: String,                 // "noun", "verb", "adjective", etc.
+  level: "simple" | "medium" | "complex" | "competitive",
+  definition: String,                   // 1-2 sentence definition
+  examples: Array&lt;String&gt;,             // Array of usage sentences
+  synonyms: Array&lt;String&gt;,             // Related words with similar meaning
+  antonyms: Array&lt;String&gt;,             // Opposite meaning words
+  etymology: String,                    // Word origin/history
+  status: "new" | "recycle" | "got-it", // Current user's progress
+  createdAt: Number,                    // Timestamp when added to user's list
+  reviewDates: Array&lt;Number&gt;,          // History of review dates
+  lastReviewDate: Number                // Last time user reviewed
+}</code></pre>
+
+      <h3>Chrome Storage API Usage</h3>
+      <p>All data is stored in <code>chrome.storage.local</code> with the following structure:</p>
+      <pre><code>// Example storage object
+{
+  "words": [
+    { id: 1, word: "propitious", status: "new", ... },
+    { id: 2, word: "pungent", status: "recycle", ... },
+    ...
+  ],
+  "stats": {
+    "totalLearned": 45,
+    "currentStreak": 12,
+    "longestStreak": 30,
+    "lastActivityDate": 1681234567000,
+    "dailyGoal": 5,
+    "completedToday": true
+  },
+  "badges": {
+    "streak_7": true,
+    "streak_30": true,
+    "wordCount_100": true,
+    "wordCount_500": false,
+    ...
+  },
+  "settings": {
+    "level": "competitive",
+    "remindersEnabled": true,
+    "reminderTime": "09:00"
+  }
+}</code></pre>
+
+      <h3>Key Service Worker Functions</h3>
+
+      <h4>getWord(status)</h4>
+      <p>Retrieve a random word with given status (new, recycle, got-it)</p>
+      <pre><code>// Returns: Promise&lt;Word object&gt;</code></pre>
+
+      <h4>updateWordStatus(wordId, newStatus)</h4>
+      <p>Transition word to new status, calculate next review date if "not yet"</p>
+      <pre><code>// Returns: Promise&lt;void&gt;</code></pre>
+
+      <h4>calculateNextReviewDate(currentInterval)</h4>
+      <p>Calculate spaced repetition interval</p>
+      <pre><code>// Intervals: 1 → 3 → 7 → 14 → 30 days
+// Returns: Date object for next review</code></pre>
+
+      <h4>unlockBadge(badgeId)</h4>
+      <p>Check badge conditions and unlock if met</p>
+      <pre><code>// Returns: Promise&lt;boolean&gt; (true if newly unlocked)</code></pre>
+
+      <h4>resetDailyStreak()</h4>
+      <p>Run daily check (via Alarms API) to reset streak if >24h since last activity</p>
+      <pre><code>// Called by: chrome.alarms.onAlarm event at 9 AM</code></pre>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div>
+        <p>&copy; 2026 Zozimus Technologies. All rights reserved. | <a href="https://github.com/zozimustechnologies/vocabbuilder/blob/main/LICENSE">License</a></p>
+      </div>
+      <div>
+        <a href="https://github.com/zozimustechnologies/vocabbuilder" target="_blank">GitHub</a>
+        <a href="https://github.com/zozimustechnologies/vocabbuilder/issues" target="_blank">Report Issue</a>
+        <a href="https://github.com/zozimustechnologies" target="_blank">More Projects</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>
