@@ -9,13 +9,318 @@
   <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/icons/icon-16.png">
   <link rel="icon" type="image/png" sizes="48x48" href="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/icons/icon-48.png">
   <link rel="icon" type="image/png" sizes="128x128" href="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/icons/icon-128.png">
-  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/store-assets/icon-300x300.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/icons/icon-300.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --bg-card: #161b22;
+      --bg-elevated: #1c2129;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-muted: #8b949e;
+      --text-bright: #f0f6fc;
+      --accent: #3d7ea6;
+      --accent-light: #4a92bd;
+      --accent-glow: rgba(61, 126, 166, 0.15);
+      --danger: #d4313b;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      padding: 80px 24px 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(61,126,166,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(61,126,166,0.25);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero .tagline {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      text-decoration: none;
+    }
+
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-light); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-bright);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); background: var(--accent-glow); }
+
+    .btn-donate { background: var(--danger); color: #fff; }
+    .btn-donate:hover { background: #e04450; }
+
+    /* ── Section ── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--text-bright);
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* ── Feature Grid ── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      padding: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 8px 24px rgba(61,126,166,0.08);
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      color: var(--text-bright);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ── Audience Grid ── */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .audience-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .audience-item .emoji { font-size: 24px; flex-shrink: 0; }
+
+    .audience-item .info h4 {
+      font-size: 0.95rem;
+      color: var(--text-bright);
+      margin-bottom: 2px;
+    }
+
+    .audience-item .info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Privacy ── */
+    .privacy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .privacy-card {
+      text-align: center;
+      padding: 32px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .privacy-card .icon {
+      font-size: 36px;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .privacy-card h3 {
+      font-size: 1rem;
+      color: var(--text-bright);
+      margin-bottom: 6px;
+    }
+
+    .privacy-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ── How to Install ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding: 28px;
+      padding-top: 56px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: 20px;
+      left: 28px;
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step h3 {
+      font-size: 1rem;
+      color: var(--text-bright);
+      margin-bottom: 6px;
+    }
+
+    .step p { font-size: 0.9rem; color: var(--text-muted); }
+
+    .step code {
+      background: var(--bg-elevated);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: var(--accent-light);
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .site-footer .links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 16px 40px; }
+      .section { padding: 40px 16px; }
+      .features, .audience-grid, .privacy-grid, .steps {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
+
   <!-- Hero -->
   <section class="hero">
-    <img src="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/icons/icon.svg" alt="VocabBuilder logo" class="hero-logo" width="100" height="100">
+    <img src="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/icons/icon-300.png" alt="VocabBuilder logo" class="hero-logo" width="100" height="100">
     <h1>VocabBuilder</h1>
     <p class="tagline">Master vocabulary through spaced repetition &mdash; with daily reminders, progressive difficulty, and intelligent streak tracking. Perfect for GMAT, GRE, LSAT, and everyday learning.</p>
     <div class="hero-buttons">
@@ -41,32 +346,32 @@
     </div>
     <div class="features">
       <div class="feature-card">
-        <span class="feature-icon">🔄</span>
+        <span class="feature-icon">&#128260;</span>
         <h3>Spaced Repetition</h3>
         <p>Progressive review intervals (1&rarr;3&rarr;7&rarr;14&rarr;30 days) optimize memory consolidation and long-term retention.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">⚡</span>
+        <span class="feature-icon">&#9889;</span>
         <h3>Daily Reminders</h3>
         <p>Smart 9 AM notifications keep you consistent. Build vocabulary as a daily habit, not a chore.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🎯</span>
+        <span class="feature-icon">&#127919;</span>
         <h3>4 Difficulty Levels</h3>
         <p>Choose Simple, Medium, Complex, or Competitive mode. Learn at your pace, from everyday to exam-level vocabulary.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🏆</span>
+        <span class="feature-icon">&#127942;</span>
         <h3>Badge System</h3>
         <p>Earn streak badges (3&rarr;7&rarr;30&rarr;365 days), word milestones, and monthly challenges to stay motivated.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">📊</span>
+        <span class="feature-icon">&#128202;</span>
         <h3>Progress Tracking</h3>
         <p>Monitor your current streak, total words learned, daily goals, and monthly progress in real-time.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🧠</span>
+        <span class="feature-icon">&#129504;</span>
         <h3>Rich Word Cards</h3>
         <p>IPA pronunciation, etymology, synonyms, antonyms, and usage examples for deeper understanding.</p>
       </div>
@@ -81,50 +386,50 @@
     </div>
     <div class="audience-grid">
       <div class="audience-item">
-        <span class="emoji">🎓</span>
+        <span class="emoji">&#127891;</span>
         <div class="info"><h4>Exam Aspirants</h4><p>Master GMAT, GRE, LSAT, or CAT-level vocabulary with competitive exam words.</p></div>
       </div>
       <div class="audience-item">
-        <span class="emoji">🌍</span>
+        <span class="emoji">&#127757;</span>
         <div class="info"><h4>ESL Learners</h4><p>Build everyday and academic English at your own pace.</p></div>
       </div>
       <div class="audience-item">
-        <span class="emoji">💼</span>
+        <span class="emoji">&#128188;</span>
         <div class="info"><h4>Professionals</h4><p>Sharpen communication for writing, presentations, and public speaking.</p></div>
       </div>
       <div class="audience-item">
-        <span class="emoji">🌱</span>
+        <span class="emoji">&#127793;</span>
         <div class="info"><h4>Lifelong Learners</h4><p>Build casual daily habits with a low-friction side panel experience.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- Why It Works -->
+  <!-- Privacy -->
   <section class="section">
     <div class="section-header">
-      <h2>Why spaced repetition works</h2>
-      <p>Based on decades of cognitive science research.</p>
+      <h2>Your words stay yours</h2>
+      <p>100% local processing. Nothing leaves your browser.</p>
     </div>
-    <div class="benefits-grid">
-      <div class="benefit-card">
-        <span class="icon">🧠</span>
-        <h3>Proven by Science</h3>
-        <p>Progressive intervals optimize how your brain consolidates knowledge from short-term to long-term memory.</p>
+    <div class="privacy-grid">
+      <div class="privacy-card">
+        <span class="icon">&#128274;</span>
+        <h3>100% Local</h3>
+        <p>All progress and word data stays in your browser. No servers, no cloud, no accounts.</p>
       </div>
-      <div class="benefit-card">
-        <span class="icon">📈</span>
-        <h3>3-5x More Effective</h3>
-        <p>Students retain 3-5 times more information compared to cramming or passive reading.</p>
+      <div class="privacy-card">
+        <span class="icon">&#128683;</span>
+        <h3>No Tracking</h3>
+        <p>Zero analytics, zero cookies, zero data collection. We don&rsquo;t know who you are.</p>
       </div>
-      <div class="benefit-card">
-        <span class="icon">⏱️</span>
-        <h3>Just 5 Minutes/Day</h3>
-        <p>Short, focused daily sessions are more efficient than marathon study sessions.</p>
+      <div class="privacy-card">
+        <span class="icon">&#128230;</span>
+        <h3>No External Scripts</h3>
+        <p>Everything runs inside the extension. No CDNs, no remote code, no dependencies.</p>
       </div>
-      <div class="benefit-card">
-        <span class="icon">🎯</span>
-        <h3>Targeted Review</h3>
-        <p>Review only words you struggle with. No wasted effort on words you already know.</p>
+      <div class="privacy-card">
+        <span class="icon">&#128064;</span>
+        <h3>Open Source</h3>
+        <p>Every line of code is on GitHub. Audit it yourself &mdash; we have nothing to hide.</p>
       </div>
     </div>
   </section>
@@ -137,7 +442,7 @@
     <div class="steps">
       <div class="step">
         <h3>Install the extension</h3>
-        <p>Get it from the <a href="https://microsoftedge.microsoft.com/addons/detail/vocabulary-builder" target="_blank" rel="noopener">Edge Add-ons store</a> or <a href="https://chrome.google.com" target="_blank" rel="noopener">Chrome Web Store</a>.</p>
+        <p>Get it from the <a href="https://microsoftedge.microsoft.com/addons/detail/vocabulary-builder" target="_blank" rel="noopener">Edge Add-ons store</a>.</p>
       </div>
       <div class="step">
         <h3>Open the side panel</h3>
@@ -149,32 +454,7 @@
       </div>
       <div class="step">
         <h3>Start learning</h3>
-        <p>Review your first word. Mark &ldquo;Got It&rdquo; when you know it, or &ldquo;Not Yet&rdquo; to review later.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- For Developers -->
-  <section class="section">
-    <div class="section-header">
-      <h2>For developers</h2>
-      <p>VocabBuilder is open source. Built with vanilla JavaScript, Manifest V3, and no external dependencies.</p>
-    </div>
-    <div class="features" style="margin-top: 32px;">
-      <div class="feature-card">
-        <span class="feature-icon">🔧</span>
-        <h3>Tech Stack</h3>
-        <p><strong>Frontend:</strong> Vanilla HTML5, CSS3, ES6+ JavaScript<br><strong>Architecture:</strong> Manifest V3 with Service Worker<br><strong>Storage:</strong> Chrome Storage API (100% local)</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">📁</span>
-        <h3>Project Structure</h3>
-        <p><strong>background/</strong> — Service worker<br><strong>sidepanel/</strong> — UI components<br><strong>data/</strong> — Words, badges, integrations<br><strong>icons/</strong> — Extension assets</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🚀</span>
-        <h3>Quick Start</h3>
-        <p>Clone the repo, open <code>edge://extensions</code>, enable Developer Mode, click "Load unpacked", and start hacking.</p>
+        <p>Review your first word. Mark &ldquo;Got It&rdquo; when you know it, or &ldquo;Not Yet&rdquo; to review again later.</p>
       </div>
     </div>
   </section>
@@ -182,9 +462,8 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="links">
-      <a href="https://github.com/zozimustechnologies" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://github.com/zozimustechnologies/vocabbuilder/issues/new" target="_blank" rel="noopener">Report Issue</a>
-      <a href="https://zozimustechnologies.github.io" target="_blank" rel="noopener">More Projects</a>
+      <a href="https://github.com/zozimustechnologies/vocabbuilder" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://microsoftedge.microsoft.com/addons/detail/vocabulary-builder" target="_blank" rel="noopener">Edge Add-ons</a>
       <a href="https://wise.com/pay/business/sandeepchadda?utm_source=open_link" target="_blank" rel="noopener">Donate</a>
     </div>
     <p>&copy; Zozimus Technologies. All rights reserved.</p>
