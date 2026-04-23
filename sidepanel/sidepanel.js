@@ -14,7 +14,7 @@
     ];
     const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     // TODO: Replace with actual store URLs once published
-    const EXTENSION_STORE_URL = 'https://microsoftedge.microsoft.com/addons/detail/vocabulary-builder/PLACEHOLDER';
+    const EXTENSION_STORE_URL = 'https://microsoftedge.microsoft.com/addons/detail/vocabulary-builder';
 
     const DEFAULT_STATE = {
         onboardingComplete: false,
