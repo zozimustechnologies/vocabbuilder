@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VocabBuilder — Master Vocabulary Through Spaced Repetition</title>
-  <meta name="description" content="Master vocabulary through spaced repetition with daily reminders, progressive difficulty levels, and intelligent streak tracking. Perfect for GMAT, GRE, LSAT, and everyday learning.">
+  <meta name="description" content="Build your vocabulary daily with spaced repetition — right in your browser. Perfect for GMAT, GRE, LSAT, and everyday learning.">
   <meta name="theme-color" content="#3d7ea6">
   <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/icons/icon-16.png">
   <link rel="icon" type="image/png" sizes="48x48" href="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/icons/icon-48.png">
@@ -114,6 +114,23 @@
 
     .btn-donate { background: var(--danger); color: #fff; }
     .btn-donate:hover { background: #e04450; }
+
+    /* ── Banner Image ── */
+    .banner {
+      max-width: 1100px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+
+    .banner img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1400 / 560;
+      object-fit: contain;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 64px rgba(0,0,0,0.4);
+    }
 
     /* ── Section ── */
     .section {
@@ -289,6 +306,23 @@
       color: var(--accent-light);
     }
 
+    /* ── Screenshots ── */
+    .screenshots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .screenshots img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1280 / 800;
+      object-fit: contain;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
     /* ── Footer ── */
     .site-footer {
       text-align: center;
@@ -310,7 +344,7 @@
     @media (max-width: 640px) {
       .hero { padding: 48px 16px 40px; }
       .section { padding: 40px 16px; }
-      .features, .audience-grid, .privacy-grid, .steps {
+      .features, .audience-grid, .privacy-grid, .steps, .screenshots {
         grid-template-columns: 1fr;
       }
     }
@@ -337,6 +371,11 @@
       </a>
     </div>
   </section>
+
+  <!-- Banner -->
+  <div class="banner">
+    <img src="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/storeassets/largepromotionaltile.png" alt="VocabBuilder promotional banner" width="1400" height="560">
+  </div>
 
   <!-- Features -->
   <section class="section">
@@ -456,6 +495,17 @@
         <h3>Start learning</h3>
         <p>Review your first word. Mark &ldquo;Got It&rdquo; when you know it, or &ldquo;Not Yet&rdquo; to review again later.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section class="section">
+    <div class="section-header">
+      <h2>See it in action</h2>
+    </div>
+    <div class="screenshots">
+      <img src="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/storeassets/screenshot-1280x800.png" alt="VocabBuilder side panel showing word of the day" loading="lazy" width="1280" height="800">
+      <img src="https://raw.githubusercontent.com/zozimustechnologies/vocabbuilder/main/storeassets/screenshot-640x400.png" alt="VocabBuilder progress and badge view" loading="lazy" width="1280" height="800">
     </div>
   </section>
 
