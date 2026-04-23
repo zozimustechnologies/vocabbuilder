@@ -1,0 +1,19 @@
+{
+  "name": "vocabbuilder",
+  "version": "1.0.0",
+  "description": "Build vocabulary for GMAT, LSAT, or any other competitive exam.",
+  "main": "generate-icons.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "puppeteer": "^24.42.0"
+  }
+}
