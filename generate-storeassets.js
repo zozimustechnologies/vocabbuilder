@@ -42,17 +42,7 @@ const CSS_VARS = `
 
 // ── HTML templates ────────────────────────────────────────────────────────────
 
-function logoHtml() {
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
-  <style>
-    ${CSS_VARS}
-    body { width:300px; height:300px; display:flex; align-items:center; justify-content:center;
-           background: radial-gradient(ellipse at 50% 40%, rgba(61,126,166,0.28) 0%, var(--bg) 70%); }
-    img  { width:220px; height:220px; border-radius:48px;
-           box-shadow: 0 12px 48px rgba(61,126,166,0.45); }
-  </style></head>
-  <body><img src="${ICON_URL}" alt="logo"></body></html>`;
-}
+
 
 function smallTileHtml() {
   return `<!DOCTYPE html><html><head><meta charset="UTF-8">
@@ -498,7 +488,7 @@ function screenshotSettingsHtml(width, height) {
 // ── Runner ────────────────────────────────────────────────────────────────────
 async function screenshot(browser, html, width, height, outFile) {
   const page = await browser.newPage();
-  await page.setViewport({ width, height, deviceScaleFactor: 3 });
+  await page.setViewport({ width, height, deviceScaleFactor: 1 });
   await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
   await page.screenshot({ path: outFile, type: 'png', clip: { x: 0, y: 0, width, height } });
   await page.close();
@@ -512,17 +502,14 @@ async function screenshot(browser, html, width, height, outFile) {
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
 
-  await screenshot(browser, logoHtml(),          300,  300,  path.join(OUT, 'extensionlogo.png'));
+  fs.copyFileSync(path.join(__dirname, 'icons', 'icon-1024.png'), path.join(OUT, 'extensionlogo.png'));
+  console.log('✓  extensionlogo.png  (copy of icon-1024.png)');
   await screenshot(browser, smallTileHtml(),     440,  280,  path.join(OUT, 'smallpromotionaltile.png'));
-  await screenshot(browser, screenshotHtml(1280, 800), 1280, 800, path.join(OUT, 'screenshot-1280x800.png'));
-  await screenshot(browser, screenshotHtml(640,  400),  640,  400, path.join(OUT, 'screenshot-640x400.png'));
-  await screenshot(browser, screenshotBadgesHtml(1280, 800), 1280, 800, path.join(OUT, 'screenshot-badges-1280x800.png'));
-  await screenshot(browser, screenshotBadgesHtml(640,  400),  640,  400, path.join(OUT, 'screenshot-badges-640x400.png'));
-  await screenshot(browser, screenshotStatsHtml(1280, 800), 1280, 800, path.join(OUT, 'screenshot-stats-1280x800.png'));
-  await screenshot(browser, screenshotStatsHtml(640,  400),  640,  400, path.join(OUT, 'screenshot-stats-640x400.png'));
+  await screenshot(browser, screenshotHtml(1280, 800),         1280, 800, path.join(OUT, 'screenshot-1280x800.png'));
+  await screenshot(browser, screenshotBadgesHtml(1280, 800),   1280, 800, path.join(OUT, 'screenshot-badges-1280x800.png'));
+  await screenshot(browser, screenshotStatsHtml(1280, 800),    1280, 800, path.join(OUT, 'screenshot-stats-1280x800.png'));
   await screenshot(browser, screenshotSettingsHtml(1280, 800), 1280, 800, path.join(OUT, 'screenshot-settings-1280x800.png'));
-  await screenshot(browser, screenshotSettingsHtml(640,  400),  640,  400, path.join(OUT, 'screenshot-settings-640x400.png'));
-  await screenshot(browser, largeTileHtml(),    1400,  560,  path.join(OUT, 'largepromotionaltile.png'));
+  await screenshot(browser, largeTileHtml(),                   1400, 560,  path.join(OUT, 'largepromotionaltile.png'));
 
   await browser.close();
   console.log('\nAll store assets saved to storeassets/');
