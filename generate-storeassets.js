@@ -506,9 +506,13 @@ async function screenshot(browser, html, width, height, outFile) {
   console.log('✓  extensionlogo.png  (copy of icon-1024.png)');
   await screenshot(browser, smallTileHtml(),     440,  280,  path.join(OUT, 'smallpromotionaltile.png'));
   await screenshot(browser, screenshotHtml(1280, 800),         1280, 800, path.join(OUT, 'screenshot-1280x800.png'));
+  await screenshot(browser, screenshotHtml(640,  400),          640,  400, path.join(OUT, 'screenshot-640x400.png'));
   await screenshot(browser, screenshotBadgesHtml(1280, 800),   1280, 800, path.join(OUT, 'screenshot-badges-1280x800.png'));
+  await screenshot(browser, screenshotBadgesHtml(640,  400),    640,  400, path.join(OUT, 'screenshot-badges-640x400.png'));
   await screenshot(browser, screenshotStatsHtml(1280, 800),    1280, 800, path.join(OUT, 'screenshot-stats-1280x800.png'));
+  await screenshot(browser, screenshotStatsHtml(640,  400),     640,  400, path.join(OUT, 'screenshot-stats-640x400.png'));
   await screenshot(browser, screenshotSettingsHtml(1280, 800), 1280, 800, path.join(OUT, 'screenshot-settings-1280x800.png'));
+  await screenshot(browser, screenshotSettingsHtml(640,  400),  640,  400, path.join(OUT, 'screenshot-settings-640x400.png'));
   await screenshot(browser, largeTileHtml(),                   1400, 560,  path.join(OUT, 'largepromotionaltile.png'));
 
   await browser.close();
